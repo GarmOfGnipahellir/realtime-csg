@@ -1,7 +1,11 @@
 import { NDArray } from "vectorious";
 
-export class Vec3 extends NDArray {
-  constructor(x?: number, y?: number, z?: number) {
-    super([x ?? 0, y ?? 0, z ?? 0]);
+export interface ArraySized<T, N extends number> extends Array<T> {
+  length: N;
+}
+
+export class Vec<D extends number> extends NDArray {
+  constructor(...args: ArraySized<number, D>) {
+    super(args);
   }
 }

@@ -1,26 +1,44 @@
-import { Vec3 } from "./types";
+import { Vec, ArraySized } from "./types";
 
-export class Face {
-  constructor(
-    public a: number,
-    public b: number,
-    public c: number,
-    public d: number
-  ) {}
+// line equation:
+// ax+by-d=0
+// y=(-ax+d)/b
+// x=(-by+d)/a
 
-  fromNormalDistance(normal: Vec3, distance: number): Face {
-    return new Face(normal.x, normal.y, normal.z, distance);
+// plane equation:
+// ax+by+cz-d=0
+// dot(n,p)-d=0
+
+export class Face<D extends number> {
+  constructor(public points: ArraySized<Vec<D>, D>) {}
+
+  getNormal(): Vec<D> {
+    return this.points[1];
   }
 
-  getNormal(): Vec3 {
-    return new Vec3(this.a, this.b, this.c);
-  }
-
-  getOrigin(): Vec3 {
-    return this.getNormal().scale(this.d);
+  getOrigin(): Vec<D> {
+    return this.points[0];
   }
 }
 
-export class Brush {
-  constructor(public faces: Face[]) {}
+export class Brush<D extends number> {
+  constructor(public faces: Face<D>[]) {}
 }
+
+// 2d
+// ax+by-c=0
+// dx+ey-f=0
+//
+// y=(c-ax)/b
+// y=(f-dx)/e
+//
+// (c-ax)/b=(f-dx)/e
+// c/b-ax/b=f/e-dx/e
+// c-ax=fb/e-dbx/e
+// ce-aex=fb-dbx
+// ce-aex-fb=-dbx
+// ce-fb=aex-dbx
+// ce-fb=x(ae-db)
+// x=(ce-fb)/(ae-db)
+//
+// y=(c-a((ce-fb)/(ae-db)))/b
