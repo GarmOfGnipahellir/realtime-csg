@@ -42,3 +42,12 @@ export class Brush<D extends number> {
 // x=(ce-fb)/(ae-db)
 //
 // y=(c-a((ce-fb)/(ae-db)))/b
+
+// 3d cross product
+// ax = by*cz - bz*cy
+// ay = bz*cx - bx*cz
+// az = bx*cy - by*cx
+//
+// 2d equivalent (assumed z basis vector)
+// ax = by
+// ay = -bx
